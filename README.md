@@ -18,7 +18,7 @@ NSString* imgUrl = @"http://img1.gtimg.com/news/pics/hv1/9/44/2218/144236679.jpg
 
 
 
-Englisth:
+English:
 
 This's an extension of SDWebImage.  It supports image cornerRadius for SDWebImage.
 
