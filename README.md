@@ -1,6 +1,7 @@
 # SDWebImage_ClipStrategy
 
 中文：
+
 SDWebImage支持圆角功能
 
 iOS上使用UIImageView.layer.cornerRadius设置圆角的话，会影响性能。
