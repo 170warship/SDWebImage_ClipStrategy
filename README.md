@@ -16,3 +16,16 @@ NSString* imgUrl = @"http://img1.gtimg.com/news/pics/hv1/9/44/2218/144236679.jpg
 
 [imgView sd_setImageWithURL:[NSURL URLWithString:imgUrl width:imgView.width height:imgView.height cornerRadius:5]];
 
+
+
+Englisth:
+
+This's an extension of SDWebImage.  It supports image cornerRadius for SDWebImage.
+
+Example:
+
+UIImageView* imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200, 150)];
+
+NSString* imgUrl = @"http://img1.gtimg.com/news/pics/hv1/9/44/2218/144236679.jpg";
+
+[imgView sd_setImageWithURL:[NSURL URLWithString:imgUrl width:imgView.width height:imgView.height cornerRadius:5]];
