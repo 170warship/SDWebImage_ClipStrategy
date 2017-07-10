@@ -513,8 +513,16 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
         }
 
         @autoreleasepool {
+            BOOL originShouldDecompressImages = self.shouldDecompressImages;
+            
+            self.shouldDecompressImages = NO;//因为可能下面的imageChangeWithImage会调用（imageChangeWithImage里面有类似decodedImageWithImage的操作），不用两次decompressImages了，
+            
             UIImage *diskImage = [self diskImageForKey:key];
+            
+            self.shouldDecompressImages = originShouldDecompressImages;//这里再设置回去
+            
             UIImage *retImg = diskImage;
+            
             if (diskImage && self.shouldCacheImagesInMemory) {
                 NSUInteger cost = SDCacheCostForImage(diskImage);
                 
@@ -523,6 +531,11 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
                     retImg = [self imageChangeWithImage:diskImage clipStrategy:clipStrategy];
                     [self.memCache setObject:retImg forKey:secondPriorityKey cost:cost];
                 }else{
+                    //这里再按原始设定，是否decodedImageWithImage
+                    if(originShouldDecompressImages){
+                        diskImage = [UIImage decodedImageWithImage:diskImage];
+                    }
+                    
                     [self.memCache setObject:diskImage forKey:key cost:cost];
                 }
                 

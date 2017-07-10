@@ -8,6 +8,7 @@
 
 #import "SDWebImageDownloader.h"
 #import "SDWebImageDownloaderOperation.h"
+#import "NSURL+ClipStrategy.h"
 #import <ImageIO/ImageIO.h>
 
 static NSString *const kProgressCallbackKey = @"progress";
@@ -171,7 +172,12 @@ static NSString *const kCompletedCallbackKey = @"completed";
                                                                 [sself.URLCallbacks removeObjectForKey:url];
                                                             });
                                                         }];
-        operation.shouldDecompressImages = wself.shouldDecompressImages;
+        
+        if(url.clipStrategy != nil){//clipStrategy不为空时，上一步的 SDImageCache storeImage:clipStrategy:recalculateFromImage:imageData:forKey:toDisk:有逻辑会执行类似的decompressImages的操作，所以这里设置shouldDecompressImages=NO
+            operation.shouldDecompressImages = NO;
+        }else{
+            operation.shouldDecompressImages = wself.shouldDecompressImages;
+        }
         
         if (wself.username && wself.password) {
             operation.credential = [NSURLCredential credentialWithUser:wself.username password:wself.password persistence:NSURLCredentialPersistenceForSession];
